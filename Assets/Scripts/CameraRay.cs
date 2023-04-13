@@ -134,7 +134,7 @@ public class CameraRay : MonoBehaviour
             try
             {
                 _circleShape = transform.GetComponent<CircleShape>();
-                _circleShape.Radius = distance;
+                _circleShape.Radius = Mathf.Clamp(Vector2.Distance(transformPosition, mousePosition), 0.65f, 5f);
             }
             catch (Exception err)
             {
