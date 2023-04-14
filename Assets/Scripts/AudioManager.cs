@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -10,7 +9,6 @@ public class AudioManager : MonoBehaviour
     private AudioSource[] _audioSources;
     private float _winningStartTime;
     private bool _victoryIsNear;
-    private List<float> _winList;
 
     // Start is called before the first frame update
     private void Start()
@@ -21,20 +19,18 @@ public class AudioManager : MonoBehaviour
         {
             source.Play();
         }
-
-        _winList = Enumerable.Repeat(1f, _audioSources.Length).ToList();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        List<float> volumes = new List<float>();
+        float volumesSum = 0f;
         foreach (AudioSource source in _audioSources)
         {
-            volumes.Add(source.volume);
+            volumesSum += source.volume;
         }
 
-        if (Enumerable.SequenceEqual(volumes, _winList))
+        if (volumesSum == _audioSources.Length)
         {
             if (!_victoryIsNear)
             {
