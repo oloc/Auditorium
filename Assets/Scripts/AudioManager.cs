@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -7,8 +6,7 @@ public class AudioManager : MonoBehaviour
     private float _winConditionTime;
 
     private AudioSource[] _audioSources;
-    private float _winningStartTime;
-    private bool _victoryIsNear;
+    private float _victoryTimer;
 
     // Start is called before the first frame update
     private void Start()
@@ -30,24 +28,19 @@ public class AudioManager : MonoBehaviour
             volumesSum += source.volume;
         }
 
-        if (volumesSum == _audioSources.Length)
+        if (volumesSum == _audioSources.Length && _victoryTimer < _winConditionTime)
         {
-            if (!_victoryIsNear)
-            {
-                _victoryIsNear = true;
-                _winningStartTime = Time.time;
-            }
-            else
-            {
-                if (Time.time >= _winningStartTime + _winConditionTime)
-                {
-                    Debug.Log("VICTORY !!!");
-                }
-            }
+            _victoryTimer += Time.deltaTime;
         }
         else
         {
-            _victoryIsNear = false;
+            _victoryTimer = 0f;
         }
+
+        if (_victoryTimer >= _winConditionTime)
+        {
+            Debug.Log("VICTORY !!!");
+        }
+
     }
 }
