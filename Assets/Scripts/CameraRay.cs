@@ -124,8 +124,6 @@ public class CameraRay : MonoBehaviour
 
     private void DoResize(Transform transform)
     {
-
-
         Vector2 mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
         Vector2 transformPosition = transform.position;
         float distance = (mousePosition - transformPosition).magnitude;
